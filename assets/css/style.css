@@ -1,0 +1,109 @@
+body {
+    font-family: sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    display: grid;
+    grid-template-areas:
+        "header header"
+        "side_bar contenido"
+        "footer footer";
+    grid-template-columns: 160px 1fr;
+    grid-template-rows: 150px 1fr auto;
+}
+
+.cont_img {
+    display: flex;
+    align-items: center;
+}
+
+.imagen {
+    height: 100px;
+    width: auto;
+}
+
+
+.header {
+    padding-left: auto;
+    grid-area: header;
+    background-color: #002C6C;
+    padding: 1rem 3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.titulo {
+    color: white;
+}
+
+.header nav a {
+    border: 0 auto;
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.header nav a:hover {
+    border-radius: 0.5rem;
+    background-color: gray;
+}
+
+.side_bar {
+    grid-area: side_bar;
+    background-color: #002C6C;
+    padding: 10px;
+}
+
+.side_bar h2 {
+    color: white;
+    margin-top: 0;
+}
+
+.side_bar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.side_bar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px 0;
+    transition: background-color 0.3s;
+}
+
+.side_bar li a:hover {
+    border-radius: 0.5rem;
+    background-color: gray;
+}
+
+.titulo_sidebar {
+    color: white;
+}
+
+.contenedor {
+    text-align: center;
+    grid-area: contenido;
+    padding: 10px;
+    background-color: #f8f9fa;
+}
+
+.tablas{
+    padding: 0 8rem;
+}
+
+.tablas tr td, .tablas tr th {
+    border-collapse: collapse;
+    border: 1px solid black;
+    padding: 8px;
+}
+
+.footer {
+    grid-area: footer;
+    background-color: #002C6C;
+    color: white;
+    padding: 0.1rem 2%;
+    text-align: center;
+}
