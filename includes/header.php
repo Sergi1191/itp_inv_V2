@@ -9,7 +9,12 @@
 </head>
 
 <body>
-
+    <!-- Botón Menú -->
+    <button class="menu-toggle" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
     <header class="header">
         <div class="cont_img ">
             <img src="../assets/imagenes/logotec.png" alt="Logo del Inventario" class="imagen">
@@ -36,3 +41,26 @@
         </aside>
     </div>
     <main class="contenido">
+        <script>
+function toggleMenu() {
+    const sidebar = document.querySelector('.side_bar');
+    const menuBtn = document.querySelector('.menu-toggle');
+    
+    sidebar.classList.toggle('active');
+    menuBtn.classList.toggle('active');
+}
+
+// Cerrar el menú al hacer clic fuera
+document.addEventListener('click', function(e) {
+    const sidebar = document.querySelector('.side_bar');
+    const menuBtn = document.querySelector('.menu-toggle');
+    
+    if (sidebar.classList.contains('active') && 
+        !sidebar.contains(e.target) && 
+        !menuBtn.contains(e.target)) {
+        sidebar.classList.remove('active');
+        menuBtn.classList.remove('active');
+    }
+});
+</script>
+</body>

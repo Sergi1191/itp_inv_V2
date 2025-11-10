@@ -107,3 +107,785 @@ body {
     padding: 0.1rem 2%;
     text-align: center;
 }
+
+/* Fuente general */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #3d5a6c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Contenedor principal */
+.login-container {
+    background-color: #4a6b82;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 900px;
+    padding: 40px 60px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Título */
+.login-form h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: 32px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    margin-bottom: 40px;
+    line-height: 1.2;
+}
+
+/* Contenedor del formulario */
+.login-form {
+    flex: 1;
+}
+
+/* Grupos de entrada */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    color: #d1d9e6;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: none;
+    background-color: #e8f0fe;
+    font-size: 16px;
+    transition: 0.3s ease;
+}
+
+.input-group input:focus {
+    outline: none;
+    background-color: #fff;
+    box-shadow: 0 0 6px #9dc9ff;
+}
+
+/* Botón */
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background-color: #d1d5d8;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #c7cbcf;
+}
+
+/* Enlace crear usuario */
+.create-user {
+    display: inline-block;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #d1d9e6;
+    text-decoration: none;
+}
+
+.create-user:hover {
+    text-decoration: underline;
+}
+
+/* Logo del ITP */
+.logo-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-container img {
+    width: 240px;
+    height: auto;
+}
+
+/* Responsivo */
+@media (max-width: 850px) {
+    .login-container {
+        flex-direction: column;
+        width: 90%;
+        text-align: center;
+    }
+
+    .logo-container {
+        margin-top: 30px;
+    }
+}
+/* =====================================================
+   SISTEMA DE INVENTARIO - TECNOLÓGICO DE PACHUCA
+   Diseño Moderno 2025 | CBTIS 222
+   ===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Colores Institucionales TecNM Pachuca - Tonos Azules */
+    --color-guinda: #1e40af;
+    --color-guinda-oscuro: #1e3a8a;
+    --color-guinda-claro: #2563eb;
+    --color-azul-electrico: #3b82f6;
+    --color-azul-oscuro: #1e40af;
+    --color-dorado: #60a5fa;
+    
+    /* Colores del Sistema */
+    --color-fondo: #F1F5F9;
+    --color-fondo-secundario: #FFFFFF;
+    --color-texto: #1E293B;
+    --color-texto-claro: #64748B;
+    
+    /* Efectos y Sombras */
+    --sombra-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --sombra-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
+    --sombra-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --sombra-lg: 0 10px 20px rgba(0, 0, 0, 0.12);
+    --sombra-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
+    
+    /* Transiciones */
+    --transicion-rapida: 0.15s ease;
+    --transicion-normal: 0.3s ease;
+    --transicion-lenta: 0.5s ease;
+    
+    /* Bordes */
+    --radio-sm: 8px;
+    --radio-md: 12px;
+    --radio-lg: 16px;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%);
+    color: var(--color-texto);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =====================================================
+   HEADER - Diseño Glassmorphism Moderno
+   ===================================================== */
+
+.header {
+    background: linear-gradient(135deg, var(--color-guinda) 0%, var(--color-guinda-oscuro) 50%, var(--color-azul-electrico) 100%);
+    color: white;
+    padding: 1.5rem 2.5rem;
+    box-shadow: var(--sombra-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    border-bottom: 3px solid var(--color-dorado);
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.05) 50%, 
+        transparent 100%);
+    animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.cont_img {
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.imagen {
+    height: 90px;
+    width: auto;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+    transition: var(--transicion-normal);
+}
+
+.imagen:hover {
+    transform: scale(1.08) rotate(2deg);
+}
+
+.header nav {
+    display: flex;
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.header nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0.8rem 1.8rem;
+    border-radius: var(--radio-md);
+    font-weight: 600;
+    font-size: 1rem;
+    transition: var(--transicion-normal);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.header nav a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: var(--transicion-normal);
+}
+
+.header nav a:hover::before {
+    left: 100%;
+}
+
+.header nav a:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: var(--color-dorado);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* =====================================================
+   SIDEBAR - Panel Lateral con Efecto Neomórfico
+   ===================================================== */
+
+.side_bar {
+    position: fixed;
+    left: 0;
+    top: 168px;
+    width: 240px;
+    height: calc(100vh - 168px);
+    background: linear-gradient(180deg, #1E293B 0%, #0F172A 100%);
+    padding: 1.5rem 0;
+    box-shadow: var(--sombra-xl);
+    overflow-y: auto;
+    z-index: 900;
+    border-right: 1px solid rgba(253, 185, 19, 0.3);
+    transition: var(--transicion-normal);
+}
+
+.side_bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--color-guinda), var(--color-azul-electrico), var(--color-dorado));
+    animation: glow 3s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; box-shadow: 0 0 20px var(--color-dorado); }
+}
+
+.side_bar aside h2 {
+    color: white;
+    font-size: 1.2rem;
+    padding: 0 1.3rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    border-bottom: 3px solid var(--color-dorado);
+    padding-bottom: 0.8rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.side_bar ul {
+    list-style: none;
+    padding: 0 0.8rem;
+}
+
+.side_bar ul li {
+    margin-bottom: 0.6rem;
+}
+
+.side_bar ul li a {
+    display: flex;
+    align-items: center;
+    color: #CBD5E1;
+    text-decoration: none;
+    padding: 0.9rem 1.2rem;
+    transition: var(--transicion-normal);
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: var(--radio-md);
+    border-left: 4px solid transparent;
+    background: rgba(255, 255, 255, 0.03);
+    position: relative;
+    overflow: hidden;
+}
+
+.side_bar ul li a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--color-guinda), var(--color-azul-electrico));
+    transition: var(--transicion-normal);
+    z-index: -1;
+}
+
+.side_bar ul li a:hover::before {
+    width: 100%;
+}
+
+.side_bar ul li a:hover {
+    color: white;
+    border-left-color: var(--color-dorado);
+    transform: translateX(8px);
+    box-shadow: var(--sombra-md);
+}
+
+/* =====================================================
+   CONTENIDO PRINCIPAL (.principal) - Cards Modernos
+   ===================================================== */
+
+.principal {
+    margin-left: 240px;
+    margin-top: 168px;
+    padding: 3rem;
+    min-height: calc(100vh - 268px);
+    background: var(--color-fondo-secundario);
+    border-radius: var(--radio-lg);
+    box-shadow: var(--sombra-lg);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(139, 21, 56, 0.1);
+    animation: fadeInUp 0.6s ease-out;
+    margin-right: 2rem;
+    margin-bottom: 2rem;
+    flex: 1;
+}
+
+.principal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-guinda), var(--color-azul-electrico), var(--color-dorado));
+}
+
+.principal h1 {
+    color: var(--color-guinda);
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    position: relative;
+    display: inline-block;
+}
+
+.principal h1::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 80px;
+    height: 5px;
+    background: linear-gradient(90deg, var(--color-guinda), var(--color-dorado));
+    border-radius: 2px;
+}
+
+.principal p {
+    color: var(--color-texto-claro);
+    font-size: 1.15rem;
+    line-height: 1.8;
+    margin-top: 1.5rem;
+}
+
+/* =====================================================
+   CONTENIDO y CONTENEDOR (para páginas PHP)
+   ===================================================== */
+
+.contenido {
+    margin-left: 240px;
+    margin-top: 168px;
+    padding: 2.5rem 3rem;
+    min-height: calc(100vh - 268px);
+    flex: 1;
+}
+
+.contenedor {
+    background: var(--color-fondo-secundario);
+    border-radius: var(--radio-lg);
+    padding: 3rem;
+    box-shadow: var(--sombra-lg);
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(139, 21, 56, 0.1);
+    transition: var(--transicion-normal);
+}
+
+.contenedor::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-guinda), var(--color-azul-electrico), var(--color-dorado));
+}
+
+.contenedor:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-xl);
+}
+
+.contenedor h2 {
+    color: var(--color-guinda);
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    position: relative;
+    display: inline-block;
+}
+
+.contenedor h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-guinda), var(--color-dorado));
+    border-radius: 2px;
+}
+
+.contenedor p {
+    color: var(--color-texto-claro);
+    font-size: 1.15rem;
+    line-height: 1.8;
+    margin-top: 1.5rem;
+}
+
+/* =====================================================
+   FOOTER - Pie Minimalista
+   ===================================================== */
+
+.footer {
+    background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+    color: #94A3B8;
+    text-align: center;
+    padding: 2rem;
+    margin-left: 240px;
+    border-top: 4px solid var(--color-dorado);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 10;
+    margin-top: auto;
+}
+
+.footer p {
+    margin: 0.6rem 0;
+    font-size: 1rem;
+    transition: var(--transicion-normal);
+}
+
+.footer p:first-child {
+    font-weight: 700;
+    color: white;
+    font-size: 1.1rem;
+}
+
+.footer p:hover {
+    color: var(--color-dorado);
+}
+
+/* =====================================================
+   EFECTOS Y ANIMACIONES ADICIONALES
+   ===================================================== */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scrollbar Personalizado */
+.side_bar::-webkit-scrollbar {
+    width: 10px;
+}
+
+.side_bar::-webkit-scrollbar-track {
+    background: #0F172A;
+}
+
+.side_bar::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--color-guinda), var(--color-azul-electrico));
+    border-radius: 10px;
+    border: 2px solid #0F172A;
+}
+
+.side_bar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--color-guinda-claro), var(--color-azul-electrico));
+}
+
+/* =====================================================
+   BOTÓN MENÚ HAMBURGUESA (solo móvil)
+   ===================================================== */
+
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1100;
+    background: var(--color-guinda);
+    border: none;
+    padding: 0.8rem;
+    border-radius: var(--radio-md);
+    cursor: pointer;
+    box-shadow: var(--sombra-md);
+    transition: var(--transicion-normal);
+}
+
+.menu-toggle:hover {
+    background: var(--color-guinda-claro);
+    transform: scale(1.05);
+}
+
+.menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: white;
+    margin: 5px 0;
+    border-radius: 2px;
+    transition: var(--transicion-normal);
+}
+
+/* Animación del botón cuando está activo */
+.menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+}
+
+.menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* =====================================================
+   RESPONSIVE - Diseño Adaptable
+   ===================================================== */
+
+@media (max-width: 1024px) {
+    .principal,
+    .contenido {
+        padding: 2rem;
+        margin-right: 1rem;
+    }
+    
+    .contenedor {
+        padding: 2rem;
+    }
+    
+    .principal h1 {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Mostrar botón hamburguesa */
+    .menu-toggle {
+        display: block;
+    }
+
+    .header {
+        flex-direction: column;
+        padding: 1.5rem;
+        gap: 1rem;
+        position: relative;
+    }
+
+    .header nav {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .header nav a {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+
+    /* Sidebar móvil - oculta por defecto */
+    .side_bar {
+        width: 280px;
+        position: fixed;
+        top: 0;
+        left: -280px;
+        height: 100vh;
+        border-right: none;
+        border-bottom: none;
+        z-index: 1050;
+        padding-top: 5rem;
+        transition: var(--transicion-normal);
+    }
+
+    /* Sidebar visible cuando está activa */
+    .side_bar.active {
+        left: 0;
+        box-shadow: var(--sombra-xl), 2px 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .side_bar::before {
+        width: 100%;
+        height: 4px;
+        top: 0;
+        bottom: auto;
+    }
+
+    /* Overlay oscuro cuando el menú está abierto */
+    .side_bar::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 280px;
+        width: calc(100vw - 280px);
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        pointer-events: none;
+        transition: var(--transicion-normal);
+        z-index: -1;
+    }
+
+    .side_bar.active::after {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .principal,
+    .contenido {
+        margin-left: 0;
+        margin-top: 0;
+        padding: 1.5rem;
+        margin-right: 0;
+    }
+
+    .footer {
+        margin-left: 0;
+    }
+
+    .contenedor {
+        padding: 2rem 1.5rem;
+    }
+
+    .principal h1 {
+        font-size: 2.5rem;
+    }
+
+    .contenedor h2 {
+        font-size: 2rem;
+    }
+
+    .imagen {
+        height: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        padding: 1rem;
+    }
+    
+    .imagen {
+        height: 55px;
+    }
+    
+    .principal h1 {
+        font-size: 2rem;
+    }
+    
+    .contenedor h2 {
+        font-size: 1.6rem;
+    }
+    
+    .principal p,
+    .contenedor p {
+        font-size: 1rem;
+    }
+
+    .menu-toggle {
+        top: 15px;
+        left: 15px;
+    }
+}
+
+/* =====================================================
+   UTILIDADES Y HELPERS
+   ===================================================== */
+
+.text-gradient {
+    background: linear-gradient(135deg, var(--color-guinda), var(--color-azul-electrico));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--color-guinda), var(--color-azul-electrico));
+    color: white;
+    box-shadow: var(--sombra-sm);
+}

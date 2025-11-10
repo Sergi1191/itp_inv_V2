@@ -12,10 +12,12 @@ include '../includes/header.php';
 ?>
 
 <section class="contenedor">
-    <h2>DASHBOARD</h2>
+    
     <p>Bienvenido al Sistema de Inventario del Tecnológico de Pachuca.</p>
     </section>
 
 <?php
 include '../includes/footer.php';
 ?>
+
+
