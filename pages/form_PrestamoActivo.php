@@ -1,9 +1,22 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 include '../includes/DBConfig.php';
 include '../includes/header.php';
 
+// Mostrar mensajes de éxito o error
+if (isset($_GET['success'])) {
+    echo '<div class="alert success">' . htmlspecialchars($_GET['success']) . '</div>';
+} elseif (isset($_GET['error'])) {
+    echo '<div class="alert error">' . htmlspecialchars($_GET['error']) . '</div>';
+}
+
 // Consultas para los dropdowns
-$sql_activos = "SELECT no_inventario, marca, modelo FROM Activos WHERE estatus = 'Activo'";
+$sql_activos = "SELECT a.id_activo, a.no_inventario, m.nombre_marca as marca, mo.nombre_modelo as modelo 
+                FROM Activos a
+                JOIN Marcas m ON a.id_marca = m.id_marca
+                JOIN Modelos mo ON a.id_modelo = mo.id_modelo
+                WHERE a.id_estatus = 2"; // 2 = ACTIVO
 $result_activos = $conexion->query($sql_activos);
 
 $sql_usuarios = "SELECT id_usuario, nombre FROM Usuarios";
@@ -19,11 +32,15 @@ $result_usuarios = $conexion->query($sql_usuarios);
             <label>Activo a Prestar:
                 <select name="no_inventario" required>
                     <option value="">Seleccionar activo</option>
-                    <?php while ($row = $result_activos->fetch_assoc()): ?>
-                        <option value="<?= $row['no_inventario'] ?>">
-                            <?= htmlspecialchars($row['marca'] . ' ' . $row['modelo'] . ' (#' . $row['no_inventario'] . ')') ?>
-                        </option>
-                    <?php endwhile; ?>
+                    <?php if ($result_activos && $result_activos->num_rows > 0): ?>
+                        <?php while ($row = $result_activos->fetch_assoc()): ?>
+                            <option value="<?= htmlspecialchars($row['no_inventario']) ?>">
+                                <?= htmlspecialchars($row['marca'] . ' ' . $row['modelo'] . ' (#' . $row['no_inventario'] . ')') ?>
+                            </option>
+                        <?php endwhile; ?>
+                    <?php else: ?>
+                        <option value="">No hay activos disponibles para préstamo</option>
+                    <?php endif; ?>
                 </select>
             </label>
 
@@ -46,10 +63,6 @@ $result_usuarios = $conexion->query($sql_usuarios);
                 <input type="date" name="fecha_devolucion" required>
             </label>
 
-            <label>Observaciones:
-                <textarea name="observaciones" rows="3" placeholder="Observaciones del préstamo..."></textarea>
-            </label>
-
             <button type="submit">Registrar Préstamo</button>
         </form>
     </section>
@@ -58,9 +71,15 @@ $result_usuarios = $conexion->query($sql_usuarios);
     <section class="contenedor">
         <h3>Préstamos Activos</h3>
         <?php
-        $sql_prestamos = "SELECT p.*, a.marca, a.modelo, u.nombre as nombre_usuario 
+        $sql_prestamos = "SELECT p.*, 
+                         a.no_inventario, 
+                         m.nombre_marca as marca, 
+                         mo.nombre_modelo as modelo, 
+                         u.nombre as nombre_usuario 
                          FROM Prestamos_historial p 
-                         JOIN Activos a ON p.no_inventario = a.no_inventario 
+                         JOIN Activos a ON p.id_activo = a.id_activo 
+                         JOIN Marcas m ON a.id_marca = m.id_marca
+                         JOIN Modelos mo ON a.id_modelo = mo.id_modelo
                          JOIN Usuarios u ON p.id_usuario_prestatario = u.id_usuario 
                          WHERE p.fecha_devolucion IS NULL 
                          ORDER BY p.fecha_prestamo DESC";

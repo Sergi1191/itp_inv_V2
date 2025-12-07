@@ -1,13 +1,14 @@
 <?php
 include '../includes/DBConfig.php';
+
 include '../api/consulta_usuarios.php';
+include '../includes/header.php'; 
 ?>
-<?php include '../includes/header.php'; ?>
 
 <section class="contenedor">
     <h1>USUARIOS</h1>
     <div>
-        <a href="./form_NuevoActivo.php">
+        <a href="./form_NuevoUsuario.php">
             <button>AGREGAR USUARIO</button>
         </a>
         <table class="tablas">
@@ -26,15 +27,18 @@ include '../api/consulta_usuarios.php';
                     <td><?= ($row['nombre_usuario']) ?></td>
                     <td><?= ($row['password']) ?></td>
                     <td><?= ($row['rol_usuario']) ?></td>
-                    <td>
-                        <a href="./form_ActualizarActivo.php">
+                    <td><a href="./form_ActualizarUsuario.php?id=<?php echo $row['id_usuario']; ?>">
                             <button>Editar</button>
                         </a>
-                    <button>Eliminar</button>
-                </td>
+                        <a href="../api/eliminar_usuario.php?id=<?php echo $row['id_usuario']; ?>"
+                            onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
+                            <button>Eliminar</button>
+                        </a>
+                    </td>
                 </tr>
             <?php endwhile; ?>
         </table>
     </div>
 </section>
+
 <?php include '../includes/footer.php'; ?>

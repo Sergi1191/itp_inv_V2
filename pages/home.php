@@ -1,20 +1,13 @@
 <?php
-// DBConfig.php debe estar en la carpeta 'includes'
-include '../includes/DBConfig.php'; 
-
-// // Control de sesión: redirige si el usuario NO está logueado
-// if (!isset($_SESSION['logged_in'])) {
-//     header("location:../login.php");
-//     exit();
-// }
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 include '../includes/header.php'; 
 ?>
 
 <section class="contenedor">
-    
     <p>Bienvenido al Sistema de Inventario del Tecnológico de Pachuca.</p>
-    </section>
+</section>
 
 <?php
 include '../includes/footer.php';

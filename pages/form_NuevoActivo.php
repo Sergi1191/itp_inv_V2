@@ -1,100 +1,161 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 include '../includes/DBConfig.php';
 include '../includes/header.php';
-include '../api/crear_activos.php'
 
-// // Consultas para los dropdowns
-// $sql = "SELECT id_tipo, nombre_tipo FROM Tipos_activo";
-// $result_tipo_activo = $conexion->query($sql);
+// Listados
+$subdirecciones = $conexion->query("SELECT * FROM Subdirecciones ORDER BY nombre_sub");
+$departamentos = $conexion->query("SELECT * FROM Departamentos ORDER BY nombre_dep");
+$tipos_de_activo = $conexion->query("SELECT * FROM Tipos_activo ORDER BY nombre_tipo");
+$marcas = $conexion->query("SELECT * FROM Marcas ORDER BY nombre_marca");
+$modelos = $conexion->query("SELECT * FROM Modelos ORDER BY nombre_modelo");
+$estatus = $conexion->query("SELECT * FROM Estatus ORDER BY nombre_estatus");
+$responsable = $conexion->query("SELECT * FROM Usuarios ORDER BY nombre");
 
-// $sql = "SELECT id, nombre FROM Usuarios";
-// $result_usuario = $conexion->query($sql);
+$mensaje = '';
+$tipo_mensaje = '';
 
-// $sql = "SELECT id_sub, nombre_sub FROM Subdirecciones";
-// $result_subdirecciones = $conexion->query($sql);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $id_tipo = $_POST['id_tipo'] ?? null;
+    if (!$id_tipo) {
+        $mensaje = 'Debe seleccionar un tipo de activo.';
+        $tipo_mensaje = 'error';
+    }
 
-// $sql = "SELECT id_dep, nombre_dep FROM Departamentos";
-// $result_departamentos = $conexion->query($sql);
+    // Obtener nombre del tipo
+    $stmt = $conexion->prepare("SELECT nombre_tipo FROM Tipos_activo WHERE id_tipo = ?");
+    $stmt->bind_param("i", $id_tipo);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $nombreTipo = $row ? $row['nombre_tipo'] : '';
+
+    // Generar abreviatura (máximo 3 caracteres para el prefijo)
+    $abr = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $nombreTipo), 0, 3));
+    $prefijo = 'ITP' . $abr;
+    
+    // Verificar que el prefijo no sea demasiado largo
+    if (strlen($prefijo) > 10) {
+        $prefijo = substr($prefijo, 0, 10);
+    }
+
+    // Obtener último consecutivo
+    $stmt = $conexion->prepare("
+        SELECT COALESCE(MAX(CAST(SUBSTRING(no_inventario, 7, 4) AS UNSIGNED)), 0) as ult
+        FROM Activos
+        WHERE no_inventario LIKE ?
+    ");
+    $like = $prefijo . '%';
+    $stmt->bind_param("s", $like);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $ultimo = (int)$result->fetch_assoc()['ult'];
+    $consec = str_pad($ultimo + 1, 4, '0', STR_PAD_LEFT);
+
+    // Número de inventario final (asegurando máximo 10 caracteres)
+    $no_inventario = substr($prefijo . $consec, 0, 10);
+    
+    // Depuración
+    echo "Valor de no_inventario: " . $no_inventario . " (longitud: " . strlen($no_inventario) . ")\n";
+    
+    // Otros campos
+    $no_serie = $_POST['no_serie'];
+    $fecha_adquisicion = $_POST['fecha_adquisicion'];
+    $id_sub = !empty($_POST['id_sub']) ? $_POST['id_sub'] : null;
+    $id_dep = !empty($_POST['id_dep']) ? $_POST['id_dep'] : null;
+    $id_tipo = !empty($_POST['id_tipo']) ? $_POST['id_tipo'] : null;
+    $id_marca = !empty($_POST['id_marca']) ? $_POST['id_marca'] : null;
+    $id_modelo = !empty($_POST['id_modelo']) ? $_POST['id_modelo'] : null;
+    $id_estatus = !empty($_POST['id_estatus']) ? $_POST['id_estatus'] : null;
+    $id_responsable = !empty($_POST['id_responsable']) ? $_POST['id_responsable'] : null;
+
+    // Insertar
+    $stmt = $conexion->prepare("
+        INSERT INTO Activos
+        (no_inventario, no_serie, fecha_adquisicion, id_sub, id_dep, id_tipo, id_marca, id_modelo, id_estatus, id_responsable)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ");
+    $stmt->bind_param("ssssiiiiii", $no_inventario, $no_serie, $fecha_adquisicion, $id_sub, $id_dep, $id_tipo, $id_marca, $id_modelo, $id_estatus, $id_responsable);
+    if ($stmt->execute()) {
+        $mensaje = 'Activo guardado correctamente. Número de inventario: ' . $no_inventario;
+        $tipo_mensaje = 'exito';
+        // Limpiar los campos del formulario
+        $_POST = array();
+    } else {
+        $mensaje = 'Error al guardar el activo: ' . $conexion->error;
+        $tipo_mensaje = 'error';
+    }
+}
 ?>
-<body>
-    <section class="contenedor">
-        <h2>Alta de Nuevo Activo</h2>
 
-        <form action="../api/crear_activos.php" method="post">
+<section class="contenedor">
+    <h1>Agregar Activo</h1>
+    <?php if (!empty($mensaje)): ?>
+        <div class="mensaje <?= $tipo_mensaje ?>">
+            <?= $mensaje ?>
+        </div>
+    <?php endif; ?>
+    <form method="post">
+        Número de serie: <input type="text" name="no_serie" required><br>
+        Fecha de adquisición: <input type="date" name="fecha_adquisicion" required><br>
 
-            <label>Marca:
-                <input type="text" name="marca" required>
-            </label>
+        Subdirecciones:
+        <select name="id_sub">
+            <option value="">-- Seleccione una opción --</option>
+            <?php while ($r = $subdirecciones->fetch_assoc()): ?>
+                <option value="<?= $r['id_sub'] ?>"><?= $r['nombre_sub'] ?></option>
+            <?php endwhile; ?>
+        </select><br>
 
-            <label>Modelo:
-                <input type="text" name="modelo" required>
-            </label>
+        Departamentos:
+        <select name="id_dep">
+            <option value="">-- Seleccione una opción --</option>
+            <?php while ($r = $departamentos->fetch_assoc()): ?>
+                <option value="<?= $r['id_dep'] ?>"><?= $r['nombre_dep'] ?></option>
+            <?php endwhile; ?>
+        </select><br>
 
-            <label>Número de Serie:
-                <input type="text" name="no_serie" required>
-            </label>
+        Tipo de Activo:
+        <select name="id_tipo" required>
+            <option value="">-- Seleccione una opción --</option>
+            <?php while ($r = $tipos_de_activo->fetch_assoc()): ?>
+                <option value="<?= $r['id_tipo'] ?>"><?= $r['nombre_tipo'] ?></option>
+            <?php endwhile; ?>
+        </select><br>
 
-            <label>Estatus:
-                <select name="estatus" required>
-                    <option value="Activo">Activo</option>
-                    <option value="Inactivo">Inactivo</option>
-                    <option value="Mantenimiento">Mantenimiento</option>
-                </select>
-            </label>
+        Marca:
+        <select name="id_marca">
+            <option value="">-- Seleccione una opción --</option>
+            <?php while ($r = $marcas->fetch_assoc()): ?>
+                <option value="<?= $r['id_marca'] ?>"><?= $r['nombre_marca'] ?></option>
+            <?php endwhile; ?>
+        </select><br>
 
-            <label>Fecha de Adquisición:
-                <input type="date" name="fecha_adquisicion" required>
-            </label>
+        Modelo:
+        <select name="id_modelo">
+            <option value="">-- Seleccione una opción --</option>
+            <?php while ($r = $modelos->fetch_assoc()): ?>
+                <option value="<?= $r['id_modelo'] ?>"><?= $r['nombre_modelo'] ?></option>
+            <?php endwhile; ?>
+        </select><br>
 
-            <label>Tipo de Activo:
-                <select name="activo_tipo_id" required>
-                    <option value="">Seleccionar tipo</option>
-                    <?php while ($row = $result_tipo_activo->fetch_assoc()): ?>
-                        <option value="<?= $row['id_tipo'] ?>">
-                            <?= htmlspecialchars($row['nombre_tipo']) ?>
-                        </option>
-                    <?php endwhile; ?>
-                </select>
-            </label>
+        Estatus:
+        <select name="id_estatus">
+            <option value="">-- Seleccione una opción --</option>
+            <?php while ($r = $estatus->fetch_assoc()): ?>
+                <option value="<?= $r['id_estatus'] ?>"><?= $r['nombre_estatus'] ?></option>
+            <?php endwhile; ?>
+        </select><br>
 
-            <label>Subdirección:
-                <select name="subdirecciones_id" required>
-                    <option value="">Seleccionar subdirección</option>
-                    <?php while ($row = $result_subdirecciones->fetch_assoc()): ?>
-                        <option value="<?= $row['id_sub'] ?>">
-                            <?= htmlspecialchars($row['nombre_sub']) ?>
-                        </option>
-                    <?php endwhile; ?>
-                </select>
-            </label>
+        Responsable:
+        <select name="id_responsable">
+            <option value="">-- Seleccione una opción --</option>
+            <?php while ($r = $responsable->fetch_assoc()): ?>
+                <option value="<?= $r['id_usuario'] ?>"><?= $r['nombre'] ?></option>
+            <?php endwhile; ?>
+        </select><br>
 
-            <label>Departamento:
-                <select name="departamentos_id" required>
-                    <option value="">Seleccionar departamento</option>
-                    <?php while ($row = $result_departamentos->fetch_assoc()): ?>
-                        <option value="<?= $row['id_dep'] ?>">
-                            <?= htmlspecialchars($row['nombre_dep']) ?>
-                        </option>
-                    <?php endwhile; ?>
-                </select>
-            </label>
-
-            <label>Responsable:
-                <select name="nombre_usuario" required>
-                    <option value="">Seleccionar responsable</option>
-                    <?php while ($row = $result_usuario->fetch_assoc()): ?>
-                        <option value="<?= $row['id_usuario'] ?>">
-                            <?= htmlspecialchars($row['nombre']) ?>
-                        </option>
-                    <?php endwhile; ?>
-                </select>
-            </label>
-
-            <button type="submit">Guardar Activo</button>
-        </form>
-    </section>
-</body>
-<?php
-include '../includes/footer.php';
-$conexion->close();
-?>
+        <button type="submit" name="guardar">Guardar</button>
+    </form>
+</section>

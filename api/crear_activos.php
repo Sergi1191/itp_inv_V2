@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_result($nombre_dep);
         $stmt->fetch();
         $stmt->close();
-
+ 
         // Obtener nombre del tipo de activo para el código
         $stmt = $conexion->prepare("SELECT nombre_tipo FROM Tipos_activo WHERE id_tipo = ?");
         $stmt->bind_param("i", $tipo_activo_id);

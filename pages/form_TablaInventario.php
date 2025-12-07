@@ -1,55 +1,47 @@
 <?php
 include '../includes/DBConfig.php';
-include '../api/consulta_actvios.php';
+include '../api/consulta_activos.php';
 ?>
 <?php include '../includes/header.php'; ?>
-
 <section class="contenedor">
     <h1>ACTIVOS</h1>
-    <div>
-        <a href="./form_NuevoActivo.php">
-            <button>AGREGAR PRODUCTO</button>
-        </a>
-        <table class="tablas">
+    <a href="./form_NuevoActivo.php"><button>AGREGAR ACTIVO</button></a>
+    <table class="tablas">
+        <tr>
+            <th>No.Inventario</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Fecha de Adquisicion</th>
+            <th>Estatus</th>
+            <th>Activo Tipo</th>
+            <th>Usuario Responsable</th>
+            <th>Nombre Departamento</th>
+            <th>Nombre Subdireccion</th>
+            <th>Acciones</th>
+        </tr>
+        <?php while ($row = $resultado->fetch_assoc()): ?>
             <tr>
-                <th>No.Inventario</th>
-                <th>Marca</th>
-                <th>Modelo</th>
-                <th>No.Serie</th>
-                <th>Estatus</th>
-                <th>Tipo</th>
-                <th>Fecha Creacion</th>
-                <th>Fecha Modificacion</th>
-                <th>Nombre Responsable</th>
-                <th>Nombre Dep.</th>
-                <th>Nombre Sub.</th>
-                <th>Nombre Tipo.</th>
-                <th>Acciones</th>
-            </tr>
-            <?php while ($row = $resultado->fetch_assoc()): ?>
-                <tr>
-                    <td><?= ($row['no_inventario']) ?></td>
-                    <td><?= ($row['marca']) ?></td>
-                    <td><?= ($row['modelo']) ?></td>
-                    <td><?= ($row['no_serie']) ?></td>
-                    <td><?= ($row['estatus']) ?></td>
-                    <td><?= ($row['tipo']) ?></td>
-                    <td><?= ($row['fecha_creacion']) ?></td>
-                    <td><?= ($row['fecha_modificacion']) ?></td>
-                    <td><?= ($row['nombre']) ?></td>
-                    <td><?= ($row['nombre_dep']) ?></td>
-                    <td><?= ($row['nombre_sub']) ?></td>
-                    <td><?= ($row['nombre_tipo']) ?></td>
-                    <td>
-                        <a href="./form_ActualizarActivo.php">
+                <td><?= ($row['id_activo']) ?></td>
+                <td><?= ($row['no_inventario']) ?></td>
+                <td><?= ($row['id_marca']) ?></td>
+                <td><?= ($row['id_modelo']) ?></td>
+                <td><?= ($row['fecha_adquisicion']) ?></td>
+                <td><?= ($row['id_estatus']) ?></td>
+                <td><?= ($row['id_tipo']) ?></td>
+                <td><?= ($row['id_responsable']) ?></td>
+                <td><?= ($row['id_dep']) ?></td>
+                <td><?= ($row['id_sub']) ?></td>
+                                    <td> 
+                                    <a href="./form_ActualizarActivo.php?id=<?php echo $row['id_activo']; ?>">
                             <button>Editar</button>
                         </a>
-                    <button>Eliminar</button>
-                    <button>Info</button>
-                </td>
-                </tr>
-            <?php endwhile; ?>
-        </table>
-    </div>
+                        <a href="../api/eliminar_activo.php?id=<?php echo $row['id_activo']; ?>"
+                            onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
+                            <button>Eliminar</button>
+                        </a>
+                    </td>
+            </tr>
+        <?php endwhile; ?>
+    </table>
 </section>
 <?php include '../includes/footer.php'; ?>

@@ -15,7 +15,7 @@ $page_title = "Buscar Activo - Inventario Tecnológico";
 include '../includes/header.php'; 
 ?>
 
-<section class="contenido">
+<section class="contenedor">
     <h2>BUSCAR ACTIVO</h2>
     <p>Utilice el siguiente formulario para localizar equipos o activos específicos dentro del inventario.</p>
 

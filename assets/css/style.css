@@ -1,238 +1,5 @@
-body {
-    font-family: sans-serif;
-    min-height: 100vh;
-    margin: 0;
-    display: grid;
-    grid-template-areas:
-        "header header"
-        "side_bar contenido"
-        "footer footer";
-    grid-template-columns: 160px 1fr;
-    grid-template-rows: 150px 1fr auto;
-}
-
-.cont_img {
-    display: flex;
-    align-items: center;
-}
-
-.imagen {
-    height: 100px;
-    width: auto;
-}
-
-
-.header {
-    padding-left: auto;
-    grid-area: header;
-    background-color: #002C6C;
-    padding: 1rem 3%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.titulo {
-    color: white;
-}
-
-.header nav a {
-    border: 0 auto;
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-.header nav a:hover {
-    border-radius: 0.5rem;
-    background-color: gray;
-}
-
-.side_bar {
-    grid-area: side_bar;
-    background-color: #002C6C;
-    padding: 10px;
-}
-
-.side_bar h2 {
-    color: white;
-    margin-top: 0;
-}
-
-.side_bar ul {
-    list-style: none;
-    padding: 0;
-}
-
-.side_bar ul li a {
-    color: white;
-    text-decoration: none;
-    display: block;
-    padding: 10px 0;
-    transition: background-color 0.3s;
-}
-
-.side_bar li a:hover {
-    border-radius: 0.5rem;
-    background-color: gray;
-}
-
-.titulo_sidebar {
-    color: white;
-}
-
-.contenedor {
-    text-align: center;
-    grid-area: contenido;
-    padding: 10px;
-    background-color: #f8f9fa;
-}
-
-.tablas{
-    padding: 0 8rem;
-}
-
-.tablas tr td, .tablas tr th {
-    border-collapse: collapse;
-    border: 1px solid black;
-    padding: 8px;
-}
-
-.footer {
-    grid-area: footer;
-    background-color: #002C6C;
-    color: white;
-    padding: 0.1rem 2%;
-    text-align: center;
-}
-
-/* Fuente general */
-body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #3d5a6c;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-}
-
-/* Contenedor principal */
-.login-container {
-    background-color: #4a6b82;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 900px;
-    padding: 40px 60px;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Título */
-.login-form h1 {
-    font-family: 'Anton', sans-serif;
-    font-size: 32px;
-    color: #fff;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    margin-bottom: 40px;
-    line-height: 1.2;
-}
-
-/* Contenedor del formulario */
-.login-form {
-    flex: 1;
-}
-
-/* Grupos de entrada */
-.input-group {
-    margin-bottom: 20px;
-}
-
-.input-group label {
-    display: block;
-    color: #d1d9e6;
-    font-weight: 700;
-    margin-bottom: 8px;
-    letter-spacing: 0.5px;
-}
-
-.input-group input {
-    width: 100%;
-    padding: 10px 14px;
-    border-radius: 10px;
-    border: none;
-    background-color: #e8f0fe;
-    font-size: 16px;
-    transition: 0.3s ease;
-}
-
-.input-group input:focus {
-    outline: none;
-    background-color: #fff;
-    box-shadow: 0 0 6px #9dc9ff;
-}
-
-/* Botón */
-button[type="submit"] {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: none;
-    background-color: #d1d5d8;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-button[type="submit"]:hover {
-    background-color: #c7cbcf;
-}
-
-/* Enlace crear usuario */
-.create-user {
-    display: inline-block;
-    margin-top: 15px;
-    font-size: 14px;
-    color: #d1d9e6;
-    text-decoration: none;
-}
-
-.create-user:hover {
-    text-decoration: underline;
-}
-
-/* Logo del ITP */
-.logo-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.logo-container img {
-    width: 240px;
-    height: auto;
-}
-
-/* Responsivo */
-@media (max-width: 850px) {
-    .login-container {
-        flex-direction: column;
-        width: 90%;
-        text-align: center;
-    }
-
-    .logo-container {
-        margin-top: 30px;
-    }
-}
 /* =====================================================
-   SISTEMA DE INVENTARIO - TECNOLÓGICO DE PACHUCA
-   Diseño Moderno 2025 | CBTIS 222
+   VARIABLES Y RESETEO
    ===================================================== */
 
 * {
@@ -249,30 +16,34 @@ button[type="submit"]:hover {
     --color-azul-electrico: #3b82f6;
     --color-azul-oscuro: #1e40af;
     --color-dorado: #60a5fa;
-    
+
     /* Colores del Sistema */
     --color-fondo: #F1F5F9;
     --color-fondo-secundario: #FFFFFF;
     --color-texto: #1E293B;
     --color-texto-claro: #64748B;
-    
+
     /* Efectos y Sombras */
     --sombra-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
     --sombra-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
     --sombra-md: 0 4px 8px rgba(0, 0, 0, 0.1);
     --sombra-lg: 0 10px 20px rgba(0, 0, 0, 0.12);
     --sombra-xl: 0 20px 40px rgba(0, 0, 0, 0.15);
-    
+
     /* Transiciones */
     --transicion-rapida: 0.15s ease;
     --transicion-normal: 0.3s ease;
     --transicion-lenta: 0.5s ease;
-    
+
     /* Bordes */
     --radio-sm: 8px;
     --radio-md: 12px;
     --radio-lg: 16px;
 }
+
+/* =====================================================
+   CUERPO GENERAL
+   ===================================================== */
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', sans-serif;
@@ -304,6 +75,7 @@ body {
     right: 0;
     z-index: 1000;
     border-bottom: 3px solid var(--color-dorado);
+    height: 168px; /* Altura fija para el header */
 }
 
 .header::before {
@@ -393,9 +165,9 @@ body {
 .side_bar {
     position: fixed;
     left: 0;
-    top: 168px;
+    top: 168px; /* Comienza justo debajo del header */
     width: 240px;
-    height: calc(100vh - 168px);
+    height: calc(100vh - 168px); /* Altura total menos la altura del header */
     background: linear-gradient(180deg, #1E293B 0%, #0F172A 100%);
     padding: 1.5rem 0;
     box-shadow: var(--sombra-xl);
@@ -485,14 +257,14 @@ body {
    CONTENIDO PRINCIPAL (.principal) - Cards Modernos
    ===================================================== */
 
-.principal {
-    margin-left: 240px;
-    margin-top: 168px;
-    padding: 3rem;
-    min-height: calc(100vh - 268px);
+.contenedor {
+    margin-left: 240px; /* Ancho del sidebar */
+    margin-top: 168px; /* Altura del header */
+    padding: 2rem; /* Espacio interno */
+    min-height: calc(100vh - 268px); /* Altura total menos la altura del header y el footer */
     background: var(--color-fondo-secundario);
-    border-radius: var(--radio-lg);
-    box-shadow: var(--sombra-lg);
+    border-radius: var(--radio-lg); /* Radio de las esquinas */
+    box-shadow: var(--sombra-lg); /* Sombra */
     position: relative;
     overflow: hidden;
     border: 1px solid rgba(139, 21, 56, 0.1);
@@ -502,7 +274,7 @@ body {
     flex: 1;
 }
 
-.principal::before {
+.contenedor::before {
     content: '';
     position: absolute;
     top: 0;
@@ -512,7 +284,7 @@ body {
     background: linear-gradient(90deg, var(--color-guinda), var(--color-azul-electrico), var(--color-dorado));
 }
 
-.principal h1 {
+.contenedor h1 {
     color: var(--color-guinda);
     font-size: 3.5rem;
     margin-bottom: 1.5rem;
@@ -522,7 +294,7 @@ body {
     display: inline-block;
 }
 
-.principal h1::after {
+.contenedor h1::after {
     content: '';
     position: absolute;
     bottom: -8px;
@@ -552,7 +324,7 @@ body {
     flex: 1;
 }
 
-.contenedor {
+/* .contenedor {
     background: var(--color-fondo-secundario);
     border-radius: var(--radio-lg);
     padding: 3rem;
@@ -562,7 +334,7 @@ body {
     overflow: hidden;
     border: 1px solid rgba(139, 21, 56, 0.1);
     transition: var(--transicion-normal);
-}
+} */
 
 .contenedor::before {
     content: '';
@@ -888,4 +660,248 @@ body {
     background: linear-gradient(135deg, var(--color-guinda), var(--color-azul-electrico));
     color: white;
     box-shadow: var(--sombra-sm);
+}
+/* =====================================================
+   LOGIN - Estilos para la página de inicio de sesión
+   ===================================================== */
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #F1F5F9 0%, #E2E8F0 100%);
+}
+
+.background-shape {
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 80%;
+    height: 150%;
+    background: linear-gradient(135deg, var(--color-guinda) 0%, var(--color-guinda-oscuro) 50%, var(--color-azul-electrico) 100%);
+    transform: rotate(-15deg);
+    border-radius: 40px;
+    z-index: 1;
+    opacity: 0.9;
+}
+
+.background-shape::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.1) 50%, 
+        transparent 100%);
+    animation: shimmer 3s infinite;
+}
+
+.login-form {
+    background: var(--color-fondo-secundario);
+    padding: 3rem 2.5rem;
+    border-radius: var(--radio-lg);
+    box-shadow: var(--sombra-xl);
+    width: 100%;
+    max-width: 450px;
+    position: relative;
+    z-index: 2;
+    border: 1px solid rgba(139, 21, 56, 0.1);
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.login-form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-guinda), var(--color-azul-electrico), var(--color-dorado));
+}
+
+.login-form h1 {
+    color: var(--color-guinda);
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    position: relative;
+}
+
+.login-form h1::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 5px;
+    background: linear-gradient(90deg, var(--color-guinda), var(--color-dorado));
+    border-radius: 2px;
+}
+
+.input-group {
+    margin-bottom: 1.8rem;
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.7rem;
+    color: var(--color-texto);
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border: 2px solid #E2E8F0;
+    border-radius: var(--radio-md);
+    font-size: 1rem;
+    transition: var(--transicion-normal);
+    background: var(--color-fondo-secundario);
+    color: var(--color-texto);
+    box-shadow: var(--sombra-xs);
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--color-guinda-claro);
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+    transform: translateY(-2px);
+}
+
+.input-group input::placeholder {
+    color: #94A3B8;
+}
+
+.login-form button {
+    width: 100%;
+    padding: 1.1rem;
+    background: linear-gradient(135deg, var(--color-guinda) 0%, var(--color-guinda-oscuro) 100%);
+    color: white;
+    border: none;
+    border-radius: var(--radio-md);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transicion-normal);
+    box-shadow: var(--sombra-md);
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-form button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: var(--transicion-normal);
+}
+
+.login-form button:hover::before {
+    left: 100%;
+}
+
+.login-form button:hover {
+    background: linear-gradient(135deg, var(--color-guinda-claro) 0%, var(--color-azul-electrico) 100%);
+    transform: translateY(-3px);
+    box-shadow: var(--sombra-lg);
+}
+
+.login-form button:active {
+    transform: translateY(-1px);
+}
+
+.logo-container {
+    position: absolute;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 2;
+}
+
+.logo-container img {
+    height: 80px;
+    width: auto;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+    transition: var(--transicion-normal);
+}
+
+.logo-container img:hover {
+    transform: scale(1.05);
+}
+
+/* =====================================================
+   RESPONSIVE PARA LOGIN
+   ===================================================== */
+
+@media (max-width: 768px) {
+    .login-container {
+        padding: 1.5rem;
+    }
+    
+    .background-shape {
+        width: 120%;
+        height: 120%;
+        top: -10%;
+        right: -60%;
+    }
+    
+    .login-form {
+        padding: 2.5rem 2rem;
+    }
+    
+    .login-form h1 {
+        font-size: 1.8rem;
+    }
+    
+    .logo-container {
+        position: relative;
+        bottom: auto;
+        right: auto;
+        margin-top: 2rem;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 1rem;
+    }
+    
+    .login-form {
+        padding: 2rem 1.5rem;
+    }
+    
+    .login-form h1 {
+        font-size: 1.6rem;
+    }
+    
+    .input-group input {
+        padding: 0.9rem 1rem;
+    }
+    
+    .login-form button {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+    
+    .logo-container img {
+        height: 60px;
+    }
 }

@@ -1,50 +1,77 @@
 <?php
-include '../includes/DBConfig.php';
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+// Incluir la configuración de la base de datos
+require_once '../includes/DBConfig.php';
 
+// Verificar si se recibieron los datos del formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $no_inventario = intval($_POST['no_inventario'] ?? 0);
-    $id_usuario_prestatario = intval($_POST['id_usuario_prestatario'] ?? 0);
-    $fecha_prestamo = $_POST['fecha_prestamo'] ?? date('Y-m-d');
-    $fecha_devolucion = $_POST['fecha_devolucion'] ?? null;
-    $observaciones = trim($_POST['observaciones'] ?? '');
+    // Obtener los datos del formulario
+    $no_inventario = isset($_POST['no_inventario']) ? trim($_POST['no_inventario']) : '';
+    $id_usuario_prestatario = isset($_POST['id_usuario_prestatario']) ? intval($_POST['id_usuario_prestatario']) : 0;
+    $fecha_prestamo = isset($_POST['fecha_prestamo']) ? $_POST['fecha_prestamo'] : date('Y-m-d');
+    $fecha_devolucion = isset($_POST['fecha_devolucion']) ? $_POST['fecha_devolucion'] : null;
+    $observaciones = isset($_POST['observaciones']) ? trim($_POST['observaciones']) : '';
 
-    // Validar que el activo existe y está activo
-    $stmt = $conexion->prepare("SELECT estatus FROM Activos WHERE no_inventario = ?");
-    $stmt->bind_param("i", $no_inventario);
-    $stmt->execute();
-    $stmt->bind_result($estatus);
-    $stmt->fetch();
-    $stmt->close();
-
-    if ($estatus !== 'Activo') {
-        die("Error: El activo no está disponible para préstamo.");
+    // Validar los datos
+    if (empty($no_inventario) || $id_usuario_prestatario <= 0) {
+        die('Error: Datos incompletos o inválidos');
     }
 
-    // Verificar que no tenga préstamos activos
-    $stmt = $conexion->prepare("SELECT id_prestamo FROM Prestamos_historial WHERE no_inventario = ? AND fecha_devolucion IS NULL");
-    $stmt->bind_param("i", $no_inventario);
-    $stmt->execute();
-    $stmt->store_result();
-    
-    if ($stmt->num_rows > 0) {
-        die("Error: El activo ya tiene un préstamo activo.");
-    }
-    $stmt->close();
+    // Iniciar transacción para asegurar la integridad de los datos
+    $conexion->begin_transaction();
 
-    // Insertar préstamo
-    $stmt = $conexion->prepare(
-        "INSERT INTO Prestamos_historial 
-        (no_inventario, fecha_prestamo, fecha_devolucion, id_usuario_prestatario) 
-        VALUES (?, ?, NULL, ?)"
-    );
-    $stmt->bind_param("isi", $no_inventario, $fecha_prestamo, $id_usuario_prestatario);
+    try {
+        // 1. Obtener el ID del activo basado en el número de inventario
+        $sql_activo = "SELECT id_activo, id_estatus FROM Activos WHERE no_inventario = ?";
+        $stmt_activo = $conexion->prepare($sql_activo);
+        $stmt_activo->bind_param('s', $no_inventario);
+        $stmt_activo->execute();
+        $result_activo = $stmt_activo->get_result();
+        
+        if ($result_activo->num_rows === 0) {
+            throw new Exception('El activo no existe');
+        }
 
-    if ($stmt->execute()) {
-        header("Location: ../pages/form_PrestamoActivo.php?success=1");
-        exit;
-    } else {
-        echo "Error al registrar préstamo: " . $stmt->error;
+        $activo = $result_activo->fetch_assoc();
+        $id_activo = $activo['id_activo'];
+
+        // 2. Verificar si el activo ya está prestado
+        if ($activo['id_estatus'] != 2) { // 2 = ACTIVO (según tu base de datos)
+            throw new Exception('El activo no está disponible para préstamo');
+        }
+
+        // 3. Insertar el registro de préstamo
+        $sql_insert = "INSERT INTO Prestamos_historial 
+                      (id_activo, fecha_prestamo, id_usuario_prestatario)
+                      VALUES (?, ?, ?)";
+        
+        $stmt_insert = $conexion->prepare($sql_insert);
+        $stmt_insert->bind_param('isi', $id_activo, $fecha_prestamo, $id_usuario_prestatario);
+        $stmt_insert->execute();
+        $id_prestamo = $conexion->insert_id;
+
+        // 4. Actualizar el estado del activo a "EN PRÉSTAMO" (asumiendo que el ID 3 es para préstamo)
+        $sql_update_activo = "UPDATE Activos SET id_estatus = 3 WHERE id_activo = ?";
+        $stmt_update = $conexion->prepare($sql_update_activo);
+        $stmt_update->bind_param('i', $id_activo);
+        $stmt_update->execute();
+
+        // Confirmar la transacción
+        $conexion->commit();
+
+        // Redireccionar con mensaje de éxito
+        header('Location: ../pages/form_PrestamoActivo.php?success=Préstamo registrado exitosamente');
+        exit();
+
+    } catch (Exception $e) {
+        // En caso de error, deshacer los cambios
+        $conexion->rollback();
+        die('Error al registrar el préstamo: ' . $e->getMessage());
     }
-    $stmt->close();
+} else {
+    // Si no es una petición POST, redirigir al formulario
+    header('Location: ../pages/form_PrestamoActivo.php');
+    exit();
 }
 ?>
