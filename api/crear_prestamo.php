@@ -51,8 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt_insert->execute();
         $id_prestamo = $conexion->insert_id;
 
-        // 4. Actualizar el estado del activo a "EN PRÉSTAMO" (asumiendo que el ID 3 es para préstamo)
-        $sql_update_activo = "UPDATE Activos SET id_estatus = 3 WHERE id_activo = ?";
+        // 4. Actualizar el estado del activo a "DESUSO" (ID 3) porque no existe "EN PRÉSTAMO" en la tabla Estatus
+        // Si necesitas un estatus para "EN PRÉSTAMO", primero agrégalo en la tabla Estatus y usa su ID aquí.
+        $sql_update_activo = "UPDATE Activos SET id_estatus = 6 WHERE id_activo = ?";
         $stmt_update = $conexion->prepare($sql_update_activo);
         $stmt_update->bind_param('i', $id_activo);
         $stmt_update->execute();
@@ -67,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } catch (Exception $e) {
         // En caso de error, deshacer los cambios
         $conexion->rollback();
-        die('Error al registrar el préstamo: ' . $e->getMessage());
+        die('Error al registrar el préstamo: ' . $e->getMessage() . ' en ' . $e->getFile() . ' línea ' . $e->getLine());
     }
 } else {
     // Si no es una petición POST, redirigir al formulario

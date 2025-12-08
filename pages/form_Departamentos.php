@@ -1,9 +1,6 @@
 <?php
-include '../includes/DBConfig.php';
-include '../api/consulta_departamentos.php';
-?>
+include '../includes/DBConfig.php'; include '../api/consulta_departamentos.php';?>
 <?php include '../includes/header.php'; ?>
-
 <section class="contenedor">
     <h1>DEPARTAMENTOS</h1>
     <div>

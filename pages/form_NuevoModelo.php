@@ -1,9 +1,7 @@
 <?php include '../includes/DBConfig.php'; ?>
 <?php include '../includes/header.php'; ?>
 <?php
-
 $marcas = $conexion->query("SELECT * FROM Marcas");
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $modelo  = $_POST['nombre_modelo'];
     $id_marca = $_POST['id_marca'];
@@ -14,10 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header("Location: form_Modelo.php");
 } 
 ?>
-<!DOCTYPE html>
-<html>
-<head><title>Agregar Modelo</title></head>
-<body>
     <section class="contenedor">
         <h1>Agregar Modelo</h1>
         <form method="post">
@@ -32,5 +26,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <button type="submit">Guardar</button>
         </form>
     </section>
-</body>
-</html>

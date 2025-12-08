@@ -22,15 +22,15 @@ include '../includes/header.php';
             </tr>
             <?php while ($row = $resultado->fetch_assoc()): ?>
                 <tr>
-                    <td><?= ($row['id_usuario']) ?></td>
-                    <td><?= ($row['nombre']) ?></td>
-                    <td><?= ($row['nombre_usuario']) ?></td>
-                    <td><?= ($row['password']) ?></td>
-                    <td><?= ($row['rol_usuario']) ?></td>
-                    <td><a href="./form_ActualizarUsuario.php?id=<?php echo $row['id_usuario']; ?>">
+                    <td data-label="ID_Usuario"><?= htmlspecialchars($row['id_usuario']) ?></td>
+                    <td data-label="Nombre"><?= htmlspecialchars($row['nombre']) ?></td>
+                    <td data-label="Nombre Usuario"><?= htmlspecialchars($row['nombre_usuario']) ?></td>
+                    <td data-label="Password"><?= htmlspecialchars($row['password']) ?></td>
+                    <td data-label="Rol Usuario"><?= htmlspecialchars($row['rol_usuario']) ?></td>
+                    <td data-label="Acciones"><a href="./form_ActualizarUsuario.php?id=<?= $row['id_usuario']; ?>">
                             <button>Editar</button>
                         </a>
-                        <a href="../api/eliminar_usuario.php?id=<?php echo $row['id_usuario']; ?>"
+                        <a href="../api/eliminar_usuario.php?id=<?= $row['id_usuario']; ?>"
                             onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
                             <button>Eliminar</button>
                         </a>

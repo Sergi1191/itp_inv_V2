@@ -21,25 +21,23 @@ include '../api/consulta_activos.php';
         </tr>
         <?php while ($row = $resultado->fetch_assoc()): ?>
             <tr>
-                <td><?= ($row['id_activo']) ?></td>
-                <td><?= ($row['no_inventario']) ?></td>
-                <td><?= ($row['id_marca']) ?></td>
-                <td><?= ($row['id_modelo']) ?></td>
-                <td><?= ($row['fecha_adquisicion']) ?></td>
-                <td><?= ($row['id_estatus']) ?></td>
-                <td><?= ($row['id_tipo']) ?></td>
-                <td><?= ($row['id_responsable']) ?></td>
-                <td><?= ($row['id_dep']) ?></td>
-                <td><?= ($row['id_sub']) ?></td>
-                                    <td> 
-                                    <a href="./form_ActualizarActivo.php?id=<?php echo $row['id_activo']; ?>">
-                            <button>Editar</button>
-                        </a>
-                        <a href="../api/eliminar_activo.php?id=<?php echo $row['id_activo']; ?>"
-                            onclick="return confirm('¿Estás seguro de eliminar este usuario?')">
-                            <button>Eliminar</button>
-                        </a>
-                    </td>
+                <td data-label="No.Inventario"><?= htmlspecialchars($row['no_inventario']) ?></td>
+                <td data-label="Marca"><?= htmlspecialchars($row['marca']) ?></td>
+                <td data-label="Modelo"><?= htmlspecialchars($row['modelo']) ?></td>
+                <td data-label="Fecha de Adquisicion"><?= htmlspecialchars($row['fecha_adquisicion']) ?></td>
+                <td data-label="Estatus"><?= htmlspecialchars($row['estatus']) ?></td>
+                <td data-label="Activo Tipo"><?= htmlspecialchars($row['tipo_activo']) ?></td>
+                <td data-label="Usuario Responsable"><?= htmlspecialchars($row['responsable']) ?></td>
+                <td data-label="Nombre Departamento"><?= htmlspecialchars($row['departamento']) ?></td>
+                <td data-label="Nombre Subdireccion"><?= htmlspecialchars($row['subdireccion']) ?></td>
+                <td data-label="Acciones">
+                    <a href="./form_ActualizarActivo.php?id=<?= $row['id_activo']; ?>">
+                        <button>Editar</button>
+                    </a>
+                    <a href="../api/eliminar_activo.php?id=<?= $row['id_activo']; ?>" onclick="return confirm('¿Estás seguro de eliminar este activo?')">
+                        <button>Eliminar</button>
+                    </a>
+                </td>
             </tr>
         <?php endwhile; ?>
     </table>

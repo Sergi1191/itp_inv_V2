@@ -98,10 +98,10 @@ $result_usuarios = $conexion->query($sql_usuarios);
                 <tbody>
                     <?php while ($prestamo = $result_prestamos->fetch_assoc()): ?>
                     <tr>
-                        <td><?= htmlspecialchars($prestamo['marca'] . ' ' . $prestamo['modelo']) ?></td>
-                        <td><?= htmlspecialchars($prestamo['nombre_usuario']) ?></td>
-                        <td><?= $prestamo['fecha_prestamo'] ?></td>
-                        <td>
+                        <td data-label="Activo"><?= htmlspecialchars($prestamo['marca'] . ' ' . $prestamo['modelo']) ?></td>
+                        <td data-label="Usuario"><?= htmlspecialchars($prestamo['nombre_usuario']) ?></td>
+                        <td data-label="Fecha Préstamo"><?= htmlspecialchars($prestamo['fecha_prestamo']) ?></td>
+                        <td data-label="Acciones">
                             <a href="../api/devolver_prestamo.php?id_prestamo=<?= $prestamo['id_prestamo'] ?>" 
                                onclick="return confirm('¿Confirmar devolución?')">
                                 Marcar como Devuelto

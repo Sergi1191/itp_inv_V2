@@ -97,65 +97,79 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     <?php endif; ?>
     <form method="post">
-        Número de serie: <input type="text" name="no_serie" required><br>
-        Fecha de adquisición: <input type="date" name="fecha_adquisicion" required><br>
-
-        Subdirecciones:
-        <select name="id_sub">
-            <option value="">-- Seleccione una opción --</option>
-            <?php while ($r = $subdirecciones->fetch_assoc()): ?>
-                <option value="<?= $r['id_sub'] ?>"><?= $r['nombre_sub'] ?></option>
-            <?php endwhile; ?>
-        </select><br>
-
-        Departamentos:
-        <select name="id_dep">
-            <option value="">-- Seleccione una opción --</option>
-            <?php while ($r = $departamentos->fetch_assoc()): ?>
-                <option value="<?= $r['id_dep'] ?>"><?= $r['nombre_dep'] ?></option>
-            <?php endwhile; ?>
-        </select><br>
-
-        Tipo de Activo:
-        <select name="id_tipo" required>
-            <option value="">-- Seleccione una opción --</option>
-            <?php while ($r = $tipos_de_activo->fetch_assoc()): ?>
-                <option value="<?= $r['id_tipo'] ?>"><?= $r['nombre_tipo'] ?></option>
-            <?php endwhile; ?>
-        </select><br>
-
-        Marca:
-        <select name="id_marca">
-            <option value="">-- Seleccione una opción --</option>
-            <?php while ($r = $marcas->fetch_assoc()): ?>
-                <option value="<?= $r['id_marca'] ?>"><?= $r['nombre_marca'] ?></option>
-            <?php endwhile; ?>
-        </select><br>
-
-        Modelo:
-        <select name="id_modelo">
-            <option value="">-- Seleccione una opción --</option>
-            <?php while ($r = $modelos->fetch_assoc()): ?>
-                <option value="<?= $r['id_modelo'] ?>"><?= $r['nombre_modelo'] ?></option>
-            <?php endwhile; ?>
-        </select><br>
-
-        Estatus:
-        <select name="id_estatus">
-            <option value="">-- Seleccione una opción --</option>
-            <?php while ($r = $estatus->fetch_assoc()): ?>
-                <option value="<?= $r['id_estatus'] ?>"><?= $r['nombre_estatus'] ?></option>
-            <?php endwhile; ?>
-        </select><br>
-
-        Responsable:
-        <select name="id_responsable">
-            <option value="">-- Seleccione una opción --</option>
-            <?php while ($r = $responsable->fetch_assoc()): ?>
-                <option value="<?= $r['id_usuario'] ?>"><?= $r['nombre'] ?></option>
-            <?php endwhile; ?>
-        </select><br>
-
-        <button type="submit" name="guardar">Guardar</button>
+        <div class="input-group">
+            <label for="no_serie">Número de serie:</label>
+            <input type="text" id="no_serie" name="no_serie" required>
+        </div>
+        <div class="input-group">
+            <label for="fecha_adquisicion">Fecha de adquisición:</label>
+            <input type="date" id="fecha_adquisicion" name="fecha_adquisicion" required>
+        </div>
+        <div class="input-group">
+            <label for="id_sub">Subdirección:</label>
+            <select id="id_sub" name="id_sub">
+                <option value="">-- Seleccione una opción --</option>
+                <?php while ($r = $subdirecciones->fetch_assoc()): ?>
+                    <option value="<?= $r['id_sub'] ?>"><?= $r['nombre_sub'] ?></option>
+                <?php endwhile; ?>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="id_dep">Departamento:</label>
+            <select id="id_dep" name="id_dep">
+                <option value="">-- Seleccione una opción --</option>
+                <?php while ($r = $departamentos->fetch_assoc()): ?>
+                    <option value="<?= $r['id_dep'] ?>"><?= $r['nombre_dep'] ?></option>
+                <?php endwhile; ?>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="id_tipo">Tipo de Activo:</label>
+            <select id="id_tipo" name="id_tipo" required>
+                <option value="">-- Seleccione una opción --</option>
+                <?php while ($r = $tipos_de_activo->fetch_assoc()): ?>
+                    <option value="<?= $r['id_tipo'] ?>"><?= $r['nombre_tipo'] ?></option>
+                <?php endwhile; ?>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="id_marca">Marca:</label>
+            <select id="id_marca" name="id_marca">
+                <option value="">-- Seleccione una opción --</option>
+                <?php while ($r = $marcas->fetch_assoc()): ?>
+                    <option value="<?= $r['id_marca'] ?>"><?= $r['nombre_marca'] ?></option>
+                <?php endwhile; ?>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="id_modelo">Modelo:</label>
+            <select id="id_modelo" name="id_modelo">
+                <option value="">-- Seleccione una opción --</option>
+                <?php while ($r = $modelos->fetch_assoc()): ?>
+                    <option value="<?= $r['id_modelo'] ?>"><?= $r['nombre_modelo'] ?></option>
+                <?php endwhile; ?>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="id_estatus">Estatus:</label>
+            <select id="id_estatus" name="id_estatus">
+                <option value="">-- Seleccione una opción --</option>
+                <?php while ($r = $estatus->fetch_assoc()): ?>
+                    <option value="<?= $r['id_estatus'] ?>"><?= $r['nombre_estatus'] ?></option>
+                <?php endwhile; ?>
+            </select>
+        </div>
+        <div class="input-group">
+            <label for="id_responsable">Responsable:</label>
+            <select id="id_responsable" name="id_responsable">
+                <option value="">-- Seleccione una opción --</option>
+                <?php while ($r = $responsable->fetch_assoc()): ?>
+                    <option value="<?= $r['id_usuario'] ?>"><?= $r['nombre'] ?></option>
+                <?php endwhile; ?>
+            </select>
+        </div>
+        <div class="input-group">
+            <button type="submit" name="guardar">Guardar</button>
+        </div>
     </form>
 </section>
