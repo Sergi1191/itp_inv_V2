@@ -43,17 +43,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // 3. Insertar el registro de préstamo
         $sql_insert = "INSERT INTO Prestamos_historial 
-                      (id_activo, fecha_prestamo, id_usuario_prestatario)
-                      VALUES (?, ?, ?)";
+                      (id_activo, fecha_prestamo, fecha_devolucion_estimada, id_usuario_prestatario)
+                      VALUES (?, ?, ?, ?)";
         
         $stmt_insert = $conexion->prepare($sql_insert);
-        $stmt_insert->bind_param('isi', $id_activo, $fecha_prestamo, $id_usuario_prestatario);
+        $stmt_insert->bind_param('isss', $id_activo, $fecha_prestamo, $fecha_devolucion, $id_usuario_prestatario);
         $stmt_insert->execute();
         $id_prestamo = $conexion->insert_id;
 
         // 4. Actualizar el estado del activo a "DESUSO" (ID 3) porque no existe "EN PRÉSTAMO" en la tabla Estatus
         // Si necesitas un estatus para "EN PRÉSTAMO", primero agrégalo en la tabla Estatus y usa su ID aquí.
-        $sql_update_activo = "UPDATE Activos SET id_estatus = 6 WHERE id_activo = ?";
+        $sql_update_activo = "UPDATE Activos SET id_estatus = 4 WHERE id_activo = ?";
         $stmt_update = $conexion->prepare($sql_update_activo);
         $stmt_update->bind_param('i', $id_activo);
         $stmt_update->execute();

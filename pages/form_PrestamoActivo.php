@@ -93,6 +93,7 @@ $result_usuarios = $conexion->query($sql_usuarios);
                         <th>Usuario</th>
                         <th>Fecha Préstamo</th>
                         <th>Acciones</th>
+<th>Multa</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -106,6 +107,15 @@ $result_usuarios = $conexion->query($sql_usuarios);
                                onclick="return confirm('¿Confirmar devolución?')">
                                 Marcar como Devuelto
                             </a>
+                        </td>
+                        <td data-label="Multa">
+                            <?php 
+                            if (isset($prestamo['multa'])) {
+                                echo '$' . number_format($prestamo['multa'], 2);
+                            } else {
+                                echo '-';
+                            }
+                            ?>
                         </td>
                     </tr>
                     <?php endwhile; ?>

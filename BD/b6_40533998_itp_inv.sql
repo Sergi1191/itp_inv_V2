@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 16-11-2025 a las 10:00:40
--- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Servidor: sql100.byetcluster.com
+-- Tiempo de generación: 15-12-2025 a las 02:53:53
+-- Versión del servidor: 10.6.22-MariaDB
+-- Versión de PHP: 7.2.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `itp_inv`
+-- Base de datos: `b6_40533998_itp_inv`
 --
 
 -- --------------------------------------------------------
@@ -48,7 +49,9 @@ CREATE TABLE `Activos` (
 --
 
 INSERT INTO `Activos` (`id_activo`, `no_inventario`, `no_serie`, `fecha_adquisicion`, `id_sub`, `id_dep`, `id_tipo`, `id_marca`, `id_modelo`, `id_estatus`, `id_responsable`, `fecha_creacion`, `fecha_modificacion`) VALUES
-(1, 'ITPINM0001', '6SE51F984SE', '2020-12-17', 3, 1, 1, 2, 2, 2, 3, '2025-11-16 02:47:57', NULL);
+(1, 'ITPINM0001', '6SE51F98', '2020-12-17', 3, 1, 1, 2, 2, 2, 3, '2025-11-16 02:47:57', NULL),
+(2, 'ITPINM0002', '1258563525612', '0002-02-15', 2, 1, 1, 2, 2, 6, 3, '2025-11-19 12:31:24', NULL),
+(3, 'ITPINM0003', '12345578', '2025-07-11', 4, 1, 1, 2, 2, 2, 3, '2025-12-05 08:40:26', NULL);
 
 -- --------------------------------------------------------
 
@@ -66,22 +69,8 @@ CREATE TABLE `Departamentos` (
 --
 
 INSERT INTO `Departamentos` (`id_dep`, `nombre_dep`) VALUES
-(1, 'DEPTO. DE DESARROLLO ACADEMICO');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `Documentacion`
---
-
-CREATE TABLE `Documentacion` (
-  `id_documento` int(11) NOT NULL,
-  `id_activo` int(11) DEFAULT NULL,
-  `archivo` varchar(255) DEFAULT NULL,
-  `subido_por_usuario_id` int(11) DEFAULT NULL,
-  `id_tipo_activo` int(11) DEFAULT NULL,
-  `id_tipo_documento` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(1, 'DEPTO. DE DESARROLLO ACADEMICO'),
+(2, 'Centro de Informacion');
 
 -- --------------------------------------------------------
 
@@ -100,7 +89,9 @@ CREATE TABLE `Estatus` (
 
 INSERT INTO `Estatus` (`id_estatus`, `nombre_estatus`) VALUES
 (2, 'ACTIVO'),
-(3, 'DESUSO');
+(4, 'PERDIDO'),
+(5, 'EN REPARACION'),
+(6, 'PRESTADO');
 
 -- --------------------------------------------------------
 
@@ -118,7 +109,8 @@ CREATE TABLE `Marcas` (
 --
 
 INSERT INTO `Marcas` (`id_marca`, `nombre_marca`) VALUES
-(2, 'ASUS');
+(2, 'ASUS'),
+(3, 'LENOVO');
 
 -- --------------------------------------------------------
 
@@ -137,7 +129,8 @@ CREATE TABLE `Modelos` (
 --
 
 INSERT INTO `Modelos` (`id_modelo`, `nombre_modelo`, `id_marca`) VALUES
-(2, 'VIVOBOOK', 2);
+(2, 'VIVOBOOK', 2),
+(4, 'A100 Ideacentre ', 3);
 
 -- --------------------------------------------------------
 
@@ -152,6 +145,15 @@ CREATE TABLE `Prestamos_historial` (
   `fecha_devolucion` date DEFAULT NULL,
   `id_usuario_prestatario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `Prestamos_historial`
+--
+
+INSERT INTO `Prestamos_historial` (`id_prestamo`, `id_activo`, `fecha_prestamo`, `fecha_devolucion`, `id_usuario_prestatario`) VALUES
+(1, 1, '2025-11-16', '2025-11-16', 3),
+(16, 2, '2025-12-08', '2025-12-08', 5),
+(17, 2, '2025-12-09', NULL, 5);
 
 -- --------------------------------------------------------
 
@@ -169,7 +171,8 @@ CREATE TABLE `Roles` (
 --
 
 INSERT INTO `Roles` (`id_rol`, `nombre_rol`) VALUES
-(1, 'ADMIN');
+(1, 'ADMIN'),
+(3, 'ENCARGADO DE AREA');
 
 -- --------------------------------------------------------
 
@@ -214,17 +217,6 @@ INSERT INTO `Tipos_activo` (`id_tipo`, `nombre_tipo`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `Tipos_documento`
---
-
-CREATE TABLE `Tipos_documento` (
-  `id_documento` int(11) NOT NULL,
-  `tipo_documento` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `Usuarios`
 --
 
@@ -242,7 +234,11 @@ CREATE TABLE `Usuarios` (
 --
 
 INSERT INTO `Usuarios` (`id_usuario`, `nombre`, `nombre_usuario`, `password`, `last_login`, `rol_usuario`) VALUES
-(3, 'Sergio Sanchez Cruz', 'admin', '12345', NULL, 1);
+(3, 'Sergio Sanchez Cruz', 'admin', 'admin', NULL, 1),
+(4, 'Noriega Perez Jennifer', 'jennihochis', '12345678', NULL, 3),
+(5, 'Valles Vite Dania Marisol', 'Dania', 'mipelonchis', NULL, NULL),
+(6, 'samantha siomara ', 'sam', '12345678909', NULL, 3),
+(7, 'samantha siomara ', 'sam', '12345678909', NULL, 3);
 
 --
 -- Índices para tablas volcadas
@@ -267,15 +263,6 @@ ALTER TABLE `Activos`
 --
 ALTER TABLE `Departamentos`
   ADD PRIMARY KEY (`id_dep`);
-
---
--- Indices de la tabla `Documentacion`
---
-ALTER TABLE `Documentacion`
-  ADD PRIMARY KEY (`id_documento`),
-  ADD KEY `id_activo` (`id_activo`),
-  ADD KEY `subido_por_usuario_id` (`subido_por_usuario_id`),
-  ADD KEY `id_tipo_documento` (`id_tipo_documento`);
 
 --
 -- Indices de la tabla `Estatus`
@@ -323,12 +310,6 @@ ALTER TABLE `Tipos_activo`
   ADD PRIMARY KEY (`id_tipo`);
 
 --
--- Indices de la tabla `Tipos_documento`
---
-ALTER TABLE `Tipos_documento`
-  ADD PRIMARY KEY (`id_documento`);
-
---
 -- Indices de la tabla `Usuarios`
 --
 ALTER TABLE `Usuarios`
@@ -343,49 +324,43 @@ ALTER TABLE `Usuarios`
 -- AUTO_INCREMENT de la tabla `Activos`
 --
 ALTER TABLE `Activos`
-  MODIFY `id_activo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_activo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `Departamentos`
 --
 ALTER TABLE `Departamentos`
-  MODIFY `id_dep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT de la tabla `Documentacion`
---
-ALTER TABLE `Documentacion`
-  MODIFY `id_documento` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_dep` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `Estatus`
 --
 ALTER TABLE `Estatus`
-  MODIFY `id_estatus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_estatus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `Marcas`
 --
 ALTER TABLE `Marcas`
-  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `Modelos`
 --
 ALTER TABLE `Modelos`
-  MODIFY `id_modelo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_modelo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `Prestamos_historial`
 --
 ALTER TABLE `Prestamos_historial`
-  MODIFY `id_prestamo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_prestamo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `Roles`
 --
 ALTER TABLE `Roles`
-  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `Subdirecciones`
@@ -400,16 +375,10 @@ ALTER TABLE `Tipos_activo`
   MODIFY `id_tipo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `Tipos_documento`
---
-ALTER TABLE `Tipos_documento`
-  MODIFY `id_documento` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `Usuarios`
 --
 ALTER TABLE `Usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas
@@ -426,14 +395,6 @@ ALTER TABLE `Activos`
   ADD CONSTRAINT `Activos_ibfk_5` FOREIGN KEY (`id_modelo`) REFERENCES `Modelos` (`id_modelo`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `Activos_ibfk_6` FOREIGN KEY (`id_estatus`) REFERENCES `Estatus` (`id_estatus`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `Activos_ibfk_7` FOREIGN KEY (`id_responsable`) REFERENCES `Usuarios` (`id_usuario`) ON DELETE SET NULL ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `Documentacion`
---
-ALTER TABLE `Documentacion`
-  ADD CONSTRAINT `Documentacion_ibfk_1` FOREIGN KEY (`id_activo`) REFERENCES `Activos` (`id_activo`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `Documentacion_ibfk_2` FOREIGN KEY (`subido_por_usuario_id`) REFERENCES `Usuarios` (`id_usuario`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `id_tipo_documento` FOREIGN KEY (`id_tipo_documento`) REFERENCES `Tipos_documento` (`id_documento`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `Modelos`

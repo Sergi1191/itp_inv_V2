@@ -30,10 +30,26 @@ try {
     $prestamo = $result_prestamo->fetch_assoc();
     $id_activo = $prestamo['id_activo'];
     
-    // 2. Actualizar la fecha de devolución del préstamo
-    $sql_update_prestamo = "UPDATE Prestamos_historial SET fecha_devolucion = ? WHERE id_prestamo = ?";
+    // 2. Calcular multa y actualizar la devolución
+    // Obtener la fecha estimada de devolución
+    $sql_fechas = "SELECT fecha_devolucion_estimada FROM Prestamos_historial WHERE id_prestamo = ?";
+    $stmt_fechas = $conexion->prepare($sql_fechas);
+    $stmt_fechas->bind_param('i', $id_prestamo);
+    $stmt_fechas->execute();
+    $result_fechas = $stmt_fechas->get_result();
+    $fecha_estimada = null;
+    if ($row = $result_fechas->fetch_assoc()) {
+        $fecha_estimada = $row['fecha_devolucion_estimada'];
+    }
+    $dias_retraso = 0;
+    $multa = 0;
+    if ($fecha_estimada && $fecha_devolucion > $fecha_estimada) {
+        $dias_retraso = (new DateTime($fecha_estimada))->diff(new DateTime($fecha_devolucion))->days;
+        $multa = $dias_retraso * 10; // $10 pesos por día
+    }
+    $sql_update_prestamo = "UPDATE Prestamos_historial SET fecha_devolucion = ?, multa = ? WHERE id_prestamo = ?";
     $stmt_update_prestamo = $conexion->prepare($sql_update_prestamo);
-    $stmt_update_prestamo->bind_param('si', $fecha_devolucion, $id_prestamo);
+    $stmt_update_prestamo->bind_param('sdi', $fecha_devolucion, $multa, $id_prestamo);
     $stmt_update_prestamo->execute();
     
     // 3. Actualizar el estado del activo a "ACTIVO" (ID 2 según tu base de datos)
