@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: sql100.byetcluster.com
--- Tiempo de generación: 15-12-2025 a las 02:53:53
+-- Tiempo de generación: 15-12-2025 a las 03:12:41
 -- Versión del servidor: 10.6.22-MariaDB
 -- Versión de PHP: 7.2.22
 
@@ -142,7 +142,9 @@ CREATE TABLE `Prestamos_historial` (
   `id_prestamo` int(11) NOT NULL,
   `id_activo` int(11) DEFAULT NULL,
   `fecha_prestamo` date DEFAULT NULL,
+  `fecha_devolucion_estimada` date DEFAULT NULL,
   `fecha_devolucion` date DEFAULT NULL,
+  `multa` decimal(10,2) DEFAULT 0.00,
   `id_usuario_prestatario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -150,10 +152,10 @@ CREATE TABLE `Prestamos_historial` (
 -- Volcado de datos para la tabla `Prestamos_historial`
 --
 
-INSERT INTO `Prestamos_historial` (`id_prestamo`, `id_activo`, `fecha_prestamo`, `fecha_devolucion`, `id_usuario_prestatario`) VALUES
-(1, 1, '2025-11-16', '2025-11-16', 3),
-(16, 2, '2025-12-08', '2025-12-08', 5),
-(17, 2, '2025-12-09', NULL, 5);
+INSERT INTO `Prestamos_historial` (`id_prestamo`, `id_activo`, `fecha_prestamo`, `fecha_devolucion_estimada`, `fecha_devolucion`, `multa`, `id_usuario_prestatario`) VALUES
+(1, 1, '2025-11-16', NULL, '2025-11-16', '0.00', 3),
+(16, 2, '2025-12-08', NULL, '2025-12-08', '0.00', 5),
+(17, 2, '2025-12-09', NULL, NULL, '0.00', 5);
 
 -- --------------------------------------------------------
 
